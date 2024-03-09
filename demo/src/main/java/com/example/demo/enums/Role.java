@@ -14,10 +14,6 @@ import static com.example.demo.enums.Permission.ADMIN_CREATE;
 import static com.example.demo.enums.Permission.ADMIN_DELETE;
 import static com.example.demo.enums.Permission.ADMIN_READ;
 import static com.example.demo.enums.Permission.ADMIN_UPDATE;
-import static com.example.demo.enums.Permission.MANAGER_CREATE;
-import static com.example.demo.enums.Permission.MANAGER_DELETE;
-import static com.example.demo.enums.Permission.MANAGER_READ;
-import static com.example.demo.enums.Permission.MANAGER_UPDATE;
 
 @RequiredArgsConstructor
 public enum Role {
@@ -28,23 +24,9 @@ public enum Role {
                   ADMIN_READ,
                   ADMIN_UPDATE,
                   ADMIN_DELETE,
-                  ADMIN_CREATE,
-                  MANAGER_READ,
-                  MANAGER_UPDATE,
-                  MANAGER_DELETE,
-                  MANAGER_CREATE
+                  ADMIN_CREATE
           )
-  ),
-  MANAGER(
-          Set.of(
-                  MANAGER_READ,
-                  MANAGER_UPDATE,
-                  MANAGER_DELETE,
-                  MANAGER_CREATE
-          )
-  )
-
-  ;
+  );
 
   @Getter
   private final Set<Permission> permissions;

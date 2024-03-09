@@ -19,6 +19,7 @@ public class AdminController {
     public String get() {
         return "GET:: admin controller";
     }
+
     @PostMapping
     @PreAuthorize("hasAuthority('admin:create')")
     @Hidden
@@ -31,6 +32,7 @@ public class AdminController {
     public String put() {
         return "PUT:: admin controller";
     }
+
     @DeleteMapping
     @PreAuthorize("hasAuthority('admin:delete')")
     @Hidden
