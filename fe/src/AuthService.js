@@ -114,17 +114,48 @@ class AuthService {
             }
 
             const data = await response.json();
-            console.log(data);
             return data;
         } catch (error) {
             console.error('An error occurred while fetching content:', error);
         }
     }
 
+    static async deleteBook(bookId) {
+        let accessToken = this.getAccessToken();
+        const userId = localStorage.getItem('userId');
+
+        const deleteBookRequest = async () => {
+            return fetch(`${this.API_BASE_URL}/api/v1/content/${bookId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                    'USER_ID': userId,
+                },
+            });
+        };
+
+        let response = await deleteBookRequest(accessToken);
+
+        if (response.status === 401) {
+            const newAccessToken = await this.refreshToken();
+            if (newAccessToken) {
+                accessToken = newAccessToken;
+                response = await deleteBookRequest(accessToken);
+            } else {
+                throw new Error('Unable to refresh token and delete book');
+            }
+        }
+
+        if (!response.ok) {
+            throw new Error('Failed to delete book after token refresh');
+        }
+    }
+
     static async addBook(author, isbn) {
         let accessToken = this.getAccessToken();
         const userId = localStorage.getItem('userId');
-        console.log(userId);
+
         const addBookRequest = async () => {
             return fetch(`${this.API_BASE_URL}/api/v1/content`, {
                 method: 'POST',
